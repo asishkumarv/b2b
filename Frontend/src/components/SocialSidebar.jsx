@@ -24,7 +24,7 @@ const SocialSidebar = () => {
       style={{
         position: 'fixed',
         left: 0,
-        top: '50%',
+        top: '80%',
         transform: 'translateY(-50%)',
         display: 'flex',
         flexDirection: 'column',
