@@ -47,8 +47,7 @@ const initModels = (seq) => {
     name: { type: DataTypes.STRING, allowNull: false },
     email: { type: DataTypes.STRING, allowNull: false },
     message: { type: DataTypes.TEXT, allowNull: false },
-    source: { type: DataTypes.STRING, defaultValue: "Website" },
-    status: { type: DataTypes.STRING, defaultValue: "New" }
+    source: { type: DataTypes.STRING, defaultValue: "Contact Form" }
   });
 
   return { User, PageContent, Blog, Enquiry };
