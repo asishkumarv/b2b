@@ -14,7 +14,7 @@ const Login = ({ setAuth }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('https://b2b-yyfo.onrender.com/api/auth/login', { email, password });
+      const res = await axios.post('https://api.b2bwebsolutions.com/api/auth/login', { email, password });
       localStorage.setItem('adminToken', res.data.token);
       setAuth(true);
     } catch (err) {
@@ -148,7 +148,7 @@ const PageContentManager = () => {
   useEffect(() => {
     const fetchContent = async () => {
       try {
-        const res = await axios.get('https://b2b-yyfo.onrender.com/api/content');
+        const res = await axios.get('https://api.b2bwebsolutions.com/api/content');
         const contentDict = res.data.reduce((acc, item) => {
           acc[item.pageKey] = item;
           return acc;
@@ -204,7 +204,7 @@ const PageContentManager = () => {
     setUploading(true);
     try {
       const token = localStorage.getItem('adminToken');
-      const res = await axios.post('https://b2b-yyfo.onrender.com/api/upload', formData, {
+      const res = await axios.post('https://api.b2bwebsolutions.com/api/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` }
       });
       
@@ -227,7 +227,7 @@ const PageContentManager = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('adminToken');
-      await axios.post('https://b2b-yyfo.onrender.com/api/content', content, {
+      await axios.post('https://api.b2bwebsolutions.com/api/content', content, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setAllContent(prev => ({ ...prev, [content.pageKey]: content }));
@@ -479,7 +479,7 @@ const EnquiriesManager = () => {
     const fetchEnquiries = async () => {
       try {
         const token = localStorage.getItem('adminToken');
-        const res = await axios.get('https://b2b-yyfo.onrender.com/api/enquiries', {
+        const res = await axios.get('https://api.b2bwebsolutions.com/api/enquiries', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setEnquiries(res.data);
@@ -545,7 +545,7 @@ const BlogManager = () => {
 
   const fetchBlogs = async () => {
     try {
-      const res = await axios.get('https://b2b-yyfo.onrender.com/api/blogs');
+      const res = await axios.get('https://api.b2bwebsolutions.com/api/blogs');
       setBlogs(res.data);
     } catch (err) {}
   };
@@ -557,12 +557,12 @@ const BlogManager = () => {
     try {
       const token = localStorage.getItem('adminToken');
       if (editId) {
-        await axios.put(`https://b2b-yyfo.onrender.com/api/blogs/${editId}`, form, {
+        await axios.put(`https://api.b2bwebsolutions.com/api/blogs/${editId}`, form, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setMessage('Blog updated!');
       } else {
-        await axios.post('https://b2b-yyfo.onrender.com/api/blogs', form, {
+        await axios.post('https://api.b2bwebsolutions.com/api/blogs', form, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setMessage('Blog published!');
@@ -586,7 +586,7 @@ const BlogManager = () => {
     if(!window.confirm("Are you sure you want to delete this blog?")) return;
     try {
       const token = localStorage.getItem('adminToken');
-      await axios.delete(`https://b2b-yyfo.onrender.com/api/blogs/${id}`, {
+      await axios.delete(`https://api.b2bwebsolutions.com/api/blogs/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchBlogs();

@@ -10,6 +10,10 @@ app.use(express.json({ limit: "500mb" }));
 app.use(express.urlencoded({ limit: "500mb", extended: true }));
 
 // Routes
+app.get("/", (req, res) => {
+  res.send("Server is running");
+});
+
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/content", require("./routes/contentRoutes"));
 app.use("/api/blogs", require("./routes/blogRoutes"));
