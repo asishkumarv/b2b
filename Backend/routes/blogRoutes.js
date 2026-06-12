@@ -3,6 +3,16 @@ const router = express.Router();
 const auth = require("../middleware/auth");
 const { Blog } = require("../models");
 
+const generateSlug = (title) => {
+  const baseSlug = title.toString().toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w\-]+/g, '')
+    .replace(/\-\-+/g, '-')
+    .replace(/^-+/, '')
+    .replace(/-+$/, '');
+  return `${baseSlug}-${Math.random().toString(36).substring(2, 8)}`;
+};
+
 // Get all blogs (Public)
 router.get("/", async (req, res) => {
   try {
@@ -14,10 +24,19 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Get blog by ID (Public)
-router.get("/:id", async (req, res) => {
+// Get blog by ID or Slug (Public)
+router.get("/:identifier", async (req, res) => {
   try {
-    const blog = await Blog.findByPk(req.params.id);
+    const { identifier } = req.params;
+    const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(identifier);
+    
+    let blog;
+    if (isUUID) {
+      blog = await Blog.findByPk(identifier);
+    } else {
+      blog = await Blog.findOne({ where: { slug: identifier } });
+    }
+
     if (!blog) {
       return res.status(404).json({ message: "Blog not found" });
     }
@@ -31,6 +50,9 @@ router.get("/:id", async (req, res) => {
 // Create a blog (Admin only)
 router.post("/", auth, async (req, res) => {
   try {
+    if (req.body.title) {
+      req.body.slug = generateSlug(req.body.title);
+    }
     const newBlog = await Blog.create(req.body);
     res.json(newBlog);
   } catch (err) {
@@ -44,6 +66,10 @@ router.put("/:id", auth, async (req, res) => {
   try {
     let blog = await Blog.findByPk(req.params.id);
     if (!blog) return res.status(404).json({ message: "Blog not found" });
+
+    if ((req.body.title && req.body.title !== blog.title) || (req.body.title && !blog.slug)) {
+      req.body.slug = generateSlug(req.body.title);
+    }
 
     blog = await blog.update(req.body);
     res.json(blog);

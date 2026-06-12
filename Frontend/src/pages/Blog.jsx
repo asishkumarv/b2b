@@ -49,7 +49,7 @@ const Blog = () => {
         ) : (
           <div className="grid-3">
             {blogs.map(blog => (
-              <Link to={`/blog/${blog.id}`} key={blog.id} style={{ display: 'block' }}>
+              <Link to={`/blog/${blog.slug || blog.id}`} key={blog.id} style={{ display: 'block' }}>
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}

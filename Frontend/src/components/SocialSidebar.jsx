@@ -23,20 +23,20 @@ const SocialSidebar = () => {
     <div
       style={{
         position: 'fixed',
-        left: isMobile ? '50%' : '0',
-        top: isMobile ? 'auto' : '50%',
-        bottom: isMobile ? '1rem' : 'auto',
-        transform: isMobile ? 'translateX(-50%)' : 'translateY(-50%)',
+        left: 0,
+        top: '50%',
+        transform: 'translateY(-50%)',
         display: 'flex',
-        flexDirection: isMobile ? 'row' : 'column',
-        gap: '0.75rem',
-        padding: isMobile ? '0.75rem 1.5rem' : '1.5rem 0.75rem',
+        flexDirection: 'column',
+        gap: isMobile ? '0.5rem' : '0.75rem',
+        padding: isMobile ? '1rem 0.5rem' : '1.5rem 0.75rem',
         background: 'rgba(255, 255, 255, 0.6)',
         backdropFilter: 'blur(12px)',
-        borderRadius: isMobile ? '999px' : '0 24px 24px 0',
+        borderRadius: '0 24px 24px 0',
         boxShadow: '0 8px 32px rgba(0,0,0,0.08)',
         zIndex: 9998,
         border: '1px solid rgba(255,255,255,0.4)',
+        borderLeft: 'none'
       }}
     >
       {socials.map((s, i) => (
@@ -51,8 +51,8 @@ const SocialSidebar = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            width: '44px',
-            height: '44px',
+            width: isMobile ? '36px' : '44px',
+            height: isMobile ? '36px' : '44px',
             borderRadius: '50%',
             color: 'var(--primary)',
             background: 'var(--white)',
@@ -60,7 +60,7 @@ const SocialSidebar = () => {
             boxShadow: '0 4px 12px rgba(0,0,0,0.05)'
           }}
         >
-          {s.icon}
+          {React.cloneElement(s.icon, { size: isMobile ? 16 : 20 })}
         </motion.a>
       ))}
     </div>
