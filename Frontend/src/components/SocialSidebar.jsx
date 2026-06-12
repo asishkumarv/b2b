@@ -30,12 +30,12 @@ const SocialSidebar = () => {
         flexDirection: 'column',
         gap: isMobile ? '0.5rem' : '0.75rem',
         padding: isMobile ? '1rem 0.5rem' : '1.5rem 0.75rem',
-        background: 'rgba(255, 255, 255, 0.2)',
-        backdropFilter: 'blur(12px)',
+        background: 'rgba(255, 255, 255, 0.1)',
+        backdropFilter: 'blur(4px)',
         borderRadius: '0 24px 24px 0',
         boxShadow: '0 8px 32px rgba(0,0,0,0.08)',
         zIndex: 9998,
-        border: '1px solid rgba(255,255,255,0.4)',
+        border: '1px solid rgba(255,255,255,0.2)',
         borderLeft: 'none'
       }}
     >
@@ -55,7 +55,8 @@ const SocialSidebar = () => {
             height: isMobile ? '36px' : '44px',
             borderRadius: '50%',
             color: 'var(--primary)',
-            background: 'var(--white)',
+            background: 'rgba(255, 255, 255, 0.6)',
+            backdropFilter: 'blur(4px)',
             transition: 'background-color 0.2s ease, color 0.2s ease',
             boxShadow: '0 4px 12px rgba(0,0,0,0.05)'
           }}
