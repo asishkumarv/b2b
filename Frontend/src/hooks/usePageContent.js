@@ -17,7 +17,7 @@ export const usePageContent = (pageKey, defaultTitle, defaultDescription, defaul
     const fetchContent = async () => {
       try {
         if (!cachedContent) {
-          const res = await axios.get('http://localhost:5000/api/content');
+          const res = await axios.get('https://b2b-yyfo.onrender.com/api/content');
           // Convert array of content into a dictionary object for O(1) lookups
           cachedContent = res.data.reduce((acc, item) => {
             acc[item.pageKey] = item;

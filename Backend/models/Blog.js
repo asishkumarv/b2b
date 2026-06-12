@@ -21,7 +21,7 @@ module.exports = (sequelize) => {
       defaultValue: "Admin"
     },
     imageUrl: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
     }
   });

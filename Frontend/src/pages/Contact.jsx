@@ -12,7 +12,7 @@ const Contact = () => {
     e.preventDefault();
     setStatus('Submitting...');
     try {
-      await axios.post('http://localhost:5000/api/enquiries', form);
+      await axios.post('https://b2b-yyfo.onrender.com/api/enquiries', form);
       setStatus('Message sent successfully!');
       setForm({ name: '', email: '', message: '', source: 'Contact Form' });
       setTimeout(() => setStatus(''), 4000);
