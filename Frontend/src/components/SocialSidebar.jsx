@@ -30,7 +30,7 @@ const SocialSidebar = () => {
         flexDirection: 'column',
         gap: isMobile ? '0.5rem' : '0.75rem',
         padding: isMobile ? '1rem 0.5rem' : '1.5rem 0.75rem',
-        background: 'rgba(255, 255, 255, 0.6)',
+        background: 'rgba(255, 255, 255, 0.2)',
         backdropFilter: 'blur(12px)',
         borderRadius: '0 24px 24px 0',
         boxShadow: '0 8px 32px rgba(0,0,0,0.08)',
