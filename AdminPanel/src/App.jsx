@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import { LayoutDashboard, FileText, LogOut, MessageSquare } from 'lucide-react';
+import { LayoutDashboard, FileText, LogOut, MessageSquare, Menu, X } from 'lucide-react';
 import b2bLogo from './assets/b2b-logo.jpeg';
 import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
@@ -77,6 +77,8 @@ const Login = ({ setAuth }) => {
 const DashboardLayout = ({ children, setAuth }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   const handleLogout = () => {
     localStorage.removeItem('adminToken');
     setAuth(false);
@@ -95,29 +97,45 @@ const DashboardLayout = ({ children, setAuth }) => {
     transition: 'all 0.2s'
   };
 
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+  const closeSidebar = () => setIsSidebarOpen(false);
+
   return (
-    <div style={{ display: 'flex', height: '100vh', background: 'var(--light)' }}>
+    <div className="admin-layout">
+      {/* Mobile Header */}
+      <div className="mobile-header">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <img src={b2bLogo} alt="B2B Logo" style={{ height: '28px', width: 'auto', borderRadius: '4px' }} />
+          <span style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--dark)' }}>B2B Admin</span>
+        </div>
+        <button onClick={toggleSidebar} style={{ background: 'transparent', color: 'var(--dark)' }}>
+          <Menu size={24} />
+        </button>
+      </div>
+
+      {/* Sidebar Overlay */}
+      <div className={`sidebar-overlay ${isSidebarOpen ? 'show' : ''}`} onClick={closeSidebar}></div>
+
       {/* Sidebar */}
-      <div style={{ 
-        width: '280px', 
-        background: 'var(--white)', 
-        borderRight: '1px solid var(--gray-200)',
-        display: 'flex', 
-        flexDirection: 'column' 
-      }}>
-        <div style={{ padding: '2rem 1.5rem', borderBottom: '1px solid var(--gray-100)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <img src={b2bLogo} alt="B2B Logo" style={{ height: '32px', width: 'auto', borderRadius: '6px' }} />
-          <span style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--dark)' }}>B2B Admin</span>
+      <div className={`admin-sidebar ${isSidebarOpen ? 'open' : ''}`}>
+        <div style={{ padding: '2rem 1.5rem', borderBottom: '1px solid var(--gray-100)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <img src={b2bLogo} alt="B2B Logo" style={{ height: '32px', width: 'auto', borderRadius: '6px' }} />
+            <span style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--dark)' }}>B2B Admin</span>
+          </div>
+          <button className="mobile-menu-btn" onClick={closeSidebar} style={{ color: 'var(--dark)' }}>
+            <X size={24} />
+          </button>
         </div>
         
         <div style={{ display: 'flex', flexDirection: 'column', padding: '1.5rem 1rem', gap: '0.5rem', flex: 1 }}>
-          <div onClick={() => navigate('/')} className="dropdown-item" style={{ ...navItemStyle, ...(location.pathname === '/' ? { color: 'var(--primary)', background: 'rgba(124, 58, 237, 0.05)' } : {}) }}>
+          <div onClick={() => { navigate('/'); closeSidebar(); }} className="dropdown-item" style={{ ...navItemStyle, ...(location.pathname === '/' ? { color: 'var(--primary)', background: 'rgba(124, 58, 237, 0.05)' } : {}) }}>
             <LayoutDashboard size={20} /> Page Content
           </div>
-          <div onClick={() => navigate('/blogs')} className="dropdown-item" style={{ ...navItemStyle, ...(location.pathname === '/blogs' ? { color: 'var(--primary)', background: 'rgba(124, 58, 237, 0.05)' } : {}) }}>
+          <div onClick={() => { navigate('/blogs'); closeSidebar(); }} className="dropdown-item" style={{ ...navItemStyle, ...(location.pathname === '/blogs' ? { color: 'var(--primary)', background: 'rgba(124, 58, 237, 0.05)' } : {}) }}>
             <FileText size={20} /> Blog Posts
           </div>
-          <div onClick={() => navigate('/enquiries')} className="dropdown-item" style={{ ...navItemStyle, ...(location.pathname === '/enquiries' ? { color: 'var(--primary)', background: 'rgba(124, 58, 237, 0.05)' } : {}) }}>
+          <div onClick={() => { navigate('/enquiries'); closeSidebar(); }} className="dropdown-item" style={{ ...navItemStyle, ...(location.pathname === '/enquiries' ? { color: 'var(--primary)', background: 'rgba(124, 58, 237, 0.05)' } : {}) }}>
             <MessageSquare size={20} /> New Enquiries
           </div>
         </div>
@@ -130,7 +148,7 @@ const DashboardLayout = ({ children, setAuth }) => {
       </div>
       
       {/* Main Content */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: '3rem' }}>
+      <div className="admin-main">
         <div className="container" style={{ maxWidth: '1000px', margin: '0 auto' }}>
           {children}
         </div>
@@ -503,10 +521,11 @@ const EnquiriesManager = () => {
             border: '1px solid var(--gray-200)',
             boxShadow: '0 4px 12px rgba(0,0,0,0.02)'
           }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem', borderBottom: '1px solid var(--gray-100)', paddingBottom: '1rem' }}>
+            <div className="flex-mobile-col" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem', borderBottom: '1px solid var(--gray-100)', paddingBottom: '1rem' }}>
               <div>
                 <div style={{ fontWeight: 700, fontSize: '1.25rem', color: 'var(--dark)' }}>{enq.name}</div>
                 <div style={{ color: 'var(--primary)', fontWeight: 500 }}>{enq.email}</div>
+                {enq.phone && <div style={{ color: 'var(--gray-500)', fontSize: '0.875rem', marginTop: '0.25rem' }}>📞 {enq.phone}</div>}
               </div>
               <div style={{ textAlign: 'right' }}>
                 <div style={{ background: 'var(--light)', padding: '0.25rem 0.75rem', borderRadius: '999px', fontSize: '0.875rem', fontWeight: 600, color: 'var(--gray-500)', display: 'inline-block', marginBottom: '0.5rem' }}>
@@ -648,7 +667,7 @@ const BlogManager = () => {
             {blogs.length === 0 && <p style={{ color: 'var(--gray-500)' }}>No blogs published yet.</p>}
             
             {blogs.map(b => (
-              <div key={b.id} style={{ 
+              <div key={b.id} className="flex-mobile-col" style={{ 
                 background: 'var(--white)', 
                 padding: '1.5rem', 
                 borderRadius: '16px', 

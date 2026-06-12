@@ -5,7 +5,7 @@ import axios from 'axios';
 import SEO from '../components/SEO';
 
 const Contact = () => {
-  const [form, setForm] = useState({ name: '', email: '', message: '', source: 'Contact Form' });
+  const [form, setForm] = useState({ name: '', email: '', phone: '', message: '', source: 'Contact Form' });
   const [status, setStatus] = useState('');
 
   const handleSubmit = async (e) => {
@@ -14,7 +14,7 @@ const Contact = () => {
     try {
       await axios.post('https://api.b2bwebsolutions.com/api/enquiries', form);
       setStatus('Message sent successfully!');
-      setForm({ name: '', email: '', message: '', source: 'Contact Form' });
+      setForm({ name: '', email: '', phone: '', message: '', source: 'Contact Form' });
       setTimeout(() => setStatus(''), 4000);
     } catch (err) {
       console.error(err);
@@ -111,6 +111,11 @@ const Contact = () => {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                   <label style={{ fontWeight: 500, color: 'var(--dark)' }}>Email Address</label>
                   <input type="email" value={form.email} onChange={e => setForm({...form, email: e.target.value})} placeholder="john@company.com" style={{ padding: '1rem', borderRadius: '12px', border: '1px solid var(--gray-200)', background: 'var(--light)', outline: 'none', fontFamily: 'inherit' }} required />
+                </div>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                  <label style={{ fontWeight: 500, color: 'var(--dark)' }}>Phone Number</label>
+                  <input type="tel" value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} placeholder="+1 (555) 000-0000" style={{ padding: '1rem', borderRadius: '12px', border: '1px solid var(--gray-200)', background: 'var(--light)', outline: 'none', fontFamily: 'inherit' }} />
                 </div>
                 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>

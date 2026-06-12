@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 
 import Navbar from "./components/Navbar";
@@ -14,9 +14,27 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import QuotePopup from "./components/QuotePopup";
 import WhatsAppFloat from "./components/WhatsAppFloat";
+import SocialSidebar from "./components/SocialSidebar";
 
 function App() {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Prevent browser from restoring scroll position
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
+    // Check if it's a page refresh
+    const navEntries = window.performance.getEntriesByType('navigation');
+    if (navEntries.length > 0 && navEntries[0].type === 'reload') {
+      // If refreshed and not on home page, redirect to home
+      if (location.pathname !== '/') {
+        navigate('/', { replace: true });
+      }
+    }
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -26,6 +44,7 @@ function App() {
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <QuotePopup />
       <WhatsAppFloat />
+      <SocialSidebar />
       <Navbar />
 
       <main style={{ flex: 1 }}>

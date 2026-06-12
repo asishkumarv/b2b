@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const QuotePopup = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [form, setForm] = useState({ name: '', email: '', message: '', source: 'Popup Form' });
+  const [form, setForm] = useState({ name: '', email: '', phone: '', message: '', source: 'Popup Form' });
   const [status, setStatus] = useState('');
 
   const location = useLocation();
@@ -14,6 +14,9 @@ const QuotePopup = () => {
   useEffect(() => {
     // Hide popup immediately on navigation
     setIsVisible(false);
+    setStatus('');
+    setForm({ name: '', email: '', phone: '', message: '', source: 'Popup Form' });
+
     
     // Delay popup by 3 seconds on every page load
     const timer = setTimeout(() => {
@@ -93,6 +96,10 @@ const QuotePopup = () => {
                 <div>
                   <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500, color: 'var(--dark)' }}>Email Address</label>
                   <input type="email" value={form.email} onChange={e => setForm({...form, email: e.target.value})} style={{ width: '100%', padding: '0.75rem', borderRadius: '12px', border: '1px solid var(--gray-200)', outline: 'none' }} required />
+                </div>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500, color: 'var(--dark)' }}>Phone Number</label>
+                  <input type="tel" value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} style={{ width: '100%', padding: '0.75rem', borderRadius: '12px', border: '1px solid var(--gray-200)', outline: 'none' }} />
                 </div>
                 <div>
                   <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500, color: 'var(--dark)' }}>Message</label>
