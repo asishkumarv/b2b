@@ -1,16 +1,23 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Target, Heart, Zap, Users } from 'lucide-react';
+import { Target, Heart, Zap, Users, Smartphone, Globe, ShoppingBag, Shield, Terminal, Star, CheckCircle } from 'lucide-react';
 import Counter from '../components/Counter';
 import SEO from '../components/SEO';
 
 import { usePageContent } from '../hooks/usePageContent';
 
 const IconMap = {
+  Smartphone: <Smartphone size={24} />,
+  Globe: <Globe size={24} />,
+  ShoppingBag: <ShoppingBag size={24} />,
+  Zap: <Zap size={24} />,
+  Shield: <Shield size={24} />,
+  Terminal: <Terminal size={24} />,
   Target: <Target size={24} />,
   Heart: <Heart size={24} />,
-  Zap: <Zap size={24} />,
-  Users: <Users size={24} />
+  Users: <Users size={24} />,
+  Star: <Star size={24} />,
+  CheckCircle: <CheckCircle size={24} />
 };
 
 const About = () => {

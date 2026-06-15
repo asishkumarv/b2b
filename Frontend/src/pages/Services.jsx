@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Smartphone, Globe, ShoppingBag, CheckCircle } from 'lucide-react';
+import { Smartphone, Globe, ShoppingBag, CheckCircle, Zap, Shield, Terminal, Target, Heart, Users, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import appDevIllustration from '../assets/app_dev_illustration.png';
@@ -11,7 +11,15 @@ import { usePageContent } from '../hooks/usePageContent';
 const IconMap = {
   Smartphone: <Smartphone size={32} />,
   Globe: <Globe size={32} />,
-  ShoppingBag: <ShoppingBag size={32} />
+  ShoppingBag: <ShoppingBag size={32} />,
+  Zap: <Zap size={32} />,
+  Shield: <Shield size={32} />,
+  Terminal: <Terminal size={32} />,
+  Target: <Target size={32} />,
+  Heart: <Heart size={32} />,
+  Users: <Users size={32} />,
+  Star: <Star size={32} />,
+  CheckCircle: <CheckCircle size={32} />
 };
 
 const Services = () => {
