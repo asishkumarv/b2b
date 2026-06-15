@@ -14,8 +14,8 @@ const WhatsAppFloat = () => {
       whileTap={{ scale: 0.9 }}
       style={{
         position: 'fixed',
-        bottom: '2rem',
-        right: '2rem',
+        bottom: '125px',
+        right: '26px',
         width: '60px',
         height: '60px',
         backgroundColor: '#25D366',
