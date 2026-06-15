@@ -5,9 +5,34 @@ import 'easymde/dist/easymde.min.css';
 
 export const BlogManager = () => {
   const [blogs, setBlogs] = useState([]);
-  const [form, setForm] = useState({ title: '', content: '' });
+  const [form, setForm] = useState({ title: '', content: '', imageUrl: '' });
   const [message, setMessage] = useState('');
   const [editId, setEditId] = useState(null);
+  const [uploading, setUploading] = useState(false);
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    setUploading(true);
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    try {
+      const token = localStorage.getItem('adminToken');
+      const res = await axios.post('https://api.b2bwebsolutions.com/api/upload', formData, {
+        headers: { 
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}` 
+        }
+      });
+      setForm(prev => ({ ...prev, imageUrl: res.data.imageUrl }));
+    } catch (err) {
+      alert("Failed to upload image. Please try a smaller image or check network.");
+    } finally {
+      setUploading(false);
+    }
+  };
 
   const handleEditorChange = useCallback((value) => {
     setForm(prev => ({ ...prev, content: value }));
@@ -43,7 +68,7 @@ export const BlogManager = () => {
         });
         setMessage('Blog published!');
       }
-      setForm({ title: '', content: '' });
+      setForm({ title: '', content: '', imageUrl: '' });
       setEditId(null);
       fetchBlogs();
       setTimeout(() => setMessage(''), 3000);
@@ -53,7 +78,7 @@ export const BlogManager = () => {
   };
 
   const handleEdit = (blog) => {
-    setForm({ title: blog.title, content: blog.content });
+    setForm({ title: blog.title, content: blog.content, imageUrl: blog.imageUrl || '' });
     setEditId(blog.id);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -89,7 +114,7 @@ export const BlogManager = () => {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
             <h3 style={{ fontSize: '1.25rem', fontWeight: 700 }}>{editId ? 'Edit Post' : 'Publish New Post'}</h3>
             {editId && (
-              <button onClick={() => { setEditId(null); setForm({ title: '', content: '' }); }} style={{ background: 'var(--light)', padding: '0.25rem 0.75rem', borderRadius: '8px', fontSize: '0.875rem', fontWeight: 600 }}>
+              <button onClick={() => { setEditId(null); setForm({ title: '', content: '', imageUrl: '' }); }} style={{ background: 'var(--light)', padding: '0.25rem 0.75rem', borderRadius: '8px', fontSize: '0.875rem', fontWeight: 600 }}>
                 Cancel Edit
               </button>
             )}
@@ -100,6 +125,15 @@ export const BlogManager = () => {
             <div>
               <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--dark)' }}>Blog Title</label>
               <input type="text" value={form.title} onChange={e => setForm({...form, title: e.target.value})} style={inputStyle} required />
+            </div>
+            <div>
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--dark)' }}>Thumbnail / Header Image URL</label>
+              <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                <input type="text" placeholder="https://example.com/image.jpg" value={form.imageUrl} onChange={e => setForm({...form, imageUrl: e.target.value})} style={{ ...inputStyle, flex: 1 }} />
+                <span style={{ fontWeight: 600, color: 'var(--gray-500)' }}>OR</span>
+                <input type="file" accept="image/*" onChange={handleImageUpload} style={{ flex: 1 }} />
+              </div>
+              {uploading && <div style={{ fontSize: '0.875rem', color: 'var(--primary)', marginTop: '0.5rem', fontWeight: 600 }}>Uploading image... Please wait.</div>}
             </div>
             <div>
               <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--dark)' }}>Content (Markdown supported)</label>

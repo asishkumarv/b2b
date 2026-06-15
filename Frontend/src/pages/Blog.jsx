@@ -62,9 +62,17 @@ const Blog = () => {
                     boxShadow: '0 4px 24px rgba(0,0,0,0.04)',
                     border: '1px solid var(--gray-100)',
                     height: '100%',
-                    transition: 'all 0.3s ease'
+                    transition: 'all 0.3s ease',
+                    overflow: 'hidden',
+                    display: 'flex',
+                    flexDirection: 'column'
                   }}
                 >
+                  {blog.imageUrl && (
+                    <div style={{ margin: '-2rem -2rem 1.5rem -2rem', height: '200px', overflow: 'hidden' }}>
+                      <img src={blog.imageUrl} alt={blog.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    </div>
+                  )}
                   <div style={{ display: 'flex', gap: '1rem', color: 'var(--gray-500)', fontSize: '0.875rem', marginBottom: '1rem' }}>
                     <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><Calendar size={14} /> {new Date(blog.createdAt).toLocaleDateString()}</span>
                     <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><User size={14} /> {blog.author}</span>

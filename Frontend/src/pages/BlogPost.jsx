@@ -52,10 +52,16 @@ const BlogPost = () => {
         
         <h1 className="h1-title" style={{ marginBottom: '1.5rem', fontSize: '3rem' }}>{blog.title}</h1>
         
-        <div style={{ display: 'flex', gap: '1.5rem', color: 'var(--gray-500)', fontSize: '1rem', marginBottom: '3rem', borderBottom: '1px solid var(--gray-200)', paddingBottom: '2rem' }}>
+        <div style={{ display: 'flex', gap: '1.5rem', color: 'var(--gray-500)', fontSize: '1rem', marginBottom: '2rem', borderBottom: '1px solid var(--gray-200)', paddingBottom: '2rem' }}>
           <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Calendar size={18} /> {new Date(blog.createdAt).toLocaleDateString()}</span>
           <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><User size={18} /> {blog.author}</span>
         </div>
+
+        {blog.imageUrl && (
+          <div style={{ marginBottom: '3rem', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
+            <img src={blog.imageUrl} alt={blog.title} style={{ width: '100%', maxHeight: '400px', objectFit: 'cover', display: 'block' }} />
+          </div>
+        )}
 
         <div className="markdown-body" style={{ fontSize: '1.125rem', lineHeight: 1.8, color: 'var(--dark)' }}>
           <ReactMarkdown>{blog.content}</ReactMarkdown>

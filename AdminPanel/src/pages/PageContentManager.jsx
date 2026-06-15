@@ -41,8 +41,8 @@ export const PageContentManager = () => {
     let initData = existing.data;
     if (!initData) {
       if (['home_what_we_do', 'home_why_choose', 'about_values'].includes(newKey)) initData = [];
-      if (['home_about', 'home_process', 'about_story'].includes(newKey)) initData = [];
-      if (newKey === 'home_showcase') initData = [];
+      if (['home_about', 'about_story'].includes(newKey)) initData = [];
+      if (['home_showcase', 'home_process'].includes(newKey)) initData = [];
       if (newKey === 'home_testimonial') initData = { initials: '', name: '', role: '' };
       if (newKey === 'about_stats') initData = [];
       if (newKey === 'services_list') initData = [];
@@ -108,7 +108,7 @@ export const PageContentManager = () => {
     const data = content.data;
 
     // Simple string array
-    if (['home_about', 'home_process', 'about_story'].includes(key)) {
+    if (['home_about', 'about_story'].includes(key)) {
       return (
         <div style={{ background: 'var(--gray-100)', padding: '1rem', borderRadius: '12px' }}>
           <h4 style={{ marginBottom: '1rem' }}>List Items / Paragraphs</h4>
@@ -157,31 +157,43 @@ export const PageContentManager = () => {
     }
 
     // Object array with image
-    if (key === 'home_showcase') {
+    if (['home_showcase', 'home_process'].includes(key)) {
       return (
         <div style={{ background: 'var(--gray-100)', padding: '1rem', borderRadius: '12px' }}>
-          <h4 style={{ marginBottom: '1rem' }}>Showcase Items</h4>
+          <h4 style={{ marginBottom: '1rem' }}>{key === 'home_process' ? 'Process Steps' : 'Showcase Items'}</h4>
           {(data || []).map((item, i) => (
             <div key={i} style={{ background: 'var(--white)', padding: '1rem', borderRadius: '8px', marginBottom: '1rem' }}>
               {item.imageUrl && <img src={item.imageUrl} alt="preview" style={{ height: '60px', borderRadius: '8px', marginBottom: '0.5rem' }} />}
-              <div style={{ marginBottom: '0.5rem' }}>
-                <label style={{fontSize:'0.8rem', display:'block', marginBottom:'0.25rem'}}>Upload Showcase Image</label>
-                <input type="file" onChange={(e) => handleImageUpload(e, 'arrayItem', i)} />
+              <div style={{ marginBottom: '1rem' }}>
+                <label style={{fontSize:'0.8rem', display:'block', marginBottom:'0.25rem', fontWeight: 600}}>Image URL or Upload Image</label>
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                  <input type="text" value={item.imageUrl || ''} onChange={e => {
+                    const newData = [...data]; newData[i].imageUrl = e.target.value; setContent({...content, data: newData});
+                  }} placeholder="https://..." style={{ ...inputStyle, flex: 1, padding: '0.5rem' }} />
+                  <span style={{ fontSize: '0.8rem', fontWeight: 600 }}>OR</span>
+                  <input type="file" onChange={(e) => handleImageUpload(e, 'arrayItem', i)} style={{ flex: 1 }} />
+                </div>
               </div>
               <div style={{ display: 'flex', gap: '1rem', marginBottom: '0.5rem' }}>
-                <div style={{ flex: 1 }}><label style={{fontSize:'0.8rem'}}>Title</label><input type="text" value={item.title || ''} onChange={e => {
+                <div style={{ flex: 1 }}><label style={{fontSize:'0.8rem'}}>Title (e.g. Step 1: Design)</label><input type="text" value={item.title || ''} onChange={e => {
                   const newData = [...data]; newData[i].title = e.target.value; setContent({...content, data: newData});
                 }} style={inputStyle} /></div>
-                <div style={{ flex: 1 }}><label style={{fontSize:'0.8rem'}}>Description</label><input type="text" value={item.desc || ''} onChange={e => {
-                  const newData = [...data]; newData[i].desc = e.target.value; setContent({...content, data: newData});
-                }} style={inputStyle} /></div>
+              </div>
+              <div style={{ marginBottom: '0.5rem' }}>
+                <label style={{fontSize:'0.8rem'}}>Detailed Description</label>
+                <textarea rows={3} value={item.desc || item.description || ''} onChange={e => {
+                  const newData = [...data]; 
+                  newData[i].desc = e.target.value; 
+                  newData[i].description = e.target.value; // Save in both just to be safe
+                  setContent({...content, data: newData});
+                }} style={{...inputStyle, resize: 'vertical'}} />
               </div>
               <button type="button" onClick={() => {
                 const newData = [...data]; newData.splice(i, 1); setContent({...content, data: newData});
-              }} style={{ color: 'red', fontSize: '0.875rem' }}>Remove Item</button>
+              }} style={{ color: 'red', fontSize: '0.875rem', fontWeight: 600 }}>Remove Item</button>
             </div>
           ))}
-          <button type="button" onClick={() => setContent({...content, data: [...(data||[]), { imageUrl: '', title: 'New', desc: '' }]})} style={{ padding: '0.5rem 1rem', background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: '6px' }}>+ Add Showcase Item</button>
+          <button type="button" onClick={() => setContent({...content, data: [...(data||[]), { imageUrl: '', title: 'New Step', desc: '' }]})} style={{ padding: '0.5rem 1rem', background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: '6px', fontWeight: 600 }}>+ Add {key === 'home_process' ? 'Process Step' : 'Showcase Item'}</button>
         </div>
       );
     }

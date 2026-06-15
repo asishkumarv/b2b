@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Smartphone, Globe, ShoppingBag, ArrowRight, CheckCircle, Zap, Settings, Shield, Terminal } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -6,6 +6,12 @@ import { usePageContent } from '../hooks/usePageContent';
 import SEO from '../components/SEO';
 import Hero from '../components/Hero';
 import ServiceCard from '../components/ServiceCard';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { EffectCoverflow, Navigation, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+import 'swiper/css/navigation';
+
 import ecommerceDashboard from '../assets/ecommerce_dashboard.png';
 import mobileAppUi from '../assets/mobile_app_ui.png';
 
@@ -37,6 +43,13 @@ const Home = () => {
   ]);
   const contentTestimonial = usePageContent('home_testimonial', 'Client Success', '"Transformative platform."', { initials: 'SJ', name: 'Sarah Jenkins', role: 'CTO' });
   const contentCta = usePageContent('home_cta', 'Have an idea? Let\'s build it.', 'Tell us about your project.');
+
+  const [activeProcessStep, setActiveProcessStep] = useState(0);
+
+  // Safely map data to support both old array-of-strings and new array-of-objects formats
+  const processSteps = Array.isArray(contentProcess.data) 
+    ? contentProcess.data.map(item => typeof item === 'string' ? { title: item, desc: '', imageUrl: '' } : item)
+    : [];
 
   return (
     <motion.div
@@ -119,23 +132,86 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Process Section */}
-      <section className="section-padding" style={{ background: 'var(--dark)', color: 'white' }}>
-        <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-            <h2 className="h2-title" style={{ color: 'white', marginBottom: '1rem' }}>{contentProcess.title}</h2>
-            <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '1.125rem', maxWidth: '700px', margin: '0 auto' }}>{contentProcess.description}</p>
+      {/* Process Section - 3D Coverflow */}
+      <section className="section-padding" style={{ background: 'var(--dark)', color: 'white', position: 'relative', overflow: 'hidden' }}>
+        <style>{`
+          .process-swiper .swiper-button-next,
+          .process-swiper .swiper-button-prev {
+            background: white;
+            color: var(--dark) !important;
+            width: 48px !important;
+            height: 48px !important;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+          }
+          .process-swiper .swiper-button-next::after,
+          .process-swiper .swiper-button-prev::after {
+            font-size: 20px !important;
+            font-weight: 800;
+          }
+        `}</style>
+        
+        <div className="container" style={{ maxWidth: '1200px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+            <h2 className="h2-title" style={{ color: 'white', marginBottom: '1rem', fontSize: '3rem', fontWeight: 300 }}>{contentProcess.title}</h2>
+            {processSteps.length > 0 && (
+              <h3 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--gray-300)' }}>
+                {processSteps[activeProcessStep]?.title || `Step ${activeProcessStep + 1}`}
+              </h3>
+            )}
           </div>
-          <div className="grid-4" style={{ gap: '2rem' }}>
-            {Array.isArray(contentProcess.data) && contentProcess.data.map((step, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} style={{ position: 'relative' }}>
-                <div style={{ fontSize: '4rem', fontWeight: 800, color: 'rgba(255,255,255,0.05)', position: 'absolute', top: '-1rem', left: '-1rem', zIndex: 0 }}>0{i + 1}</div>
-                <div style={{ position: 'relative', zIndex: 1 }}>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '0.5rem', color: 'var(--accent)' }}>{step}</h3>
-                  <div style={{ height: '4px', width: '40px', background: 'var(--primary)', borderRadius: '2px' }}></div>
-                </div>
-              </motion.div>
-            ))}
+          
+          <div style={{ padding: '2rem 0' }}>
+            <Swiper
+              effect={'coverflow'}
+              grabCursor={true}
+              centeredSlides={true}
+              slidesPerView={'auto'}
+              initialSlide={Math.floor(processSteps.length / 2) || 0}
+              coverflowEffect={{
+                rotate: 0,
+                stretch: 0,
+                depth: 150,
+                modifier: 2.5,
+                slideShadows: true,
+              }}
+              navigation={true}
+              autoplay={{
+                delay: 3000,
+                disableOnInteraction: false,
+              }}
+              modules={[EffectCoverflow, Navigation, Autoplay]}
+              onSlideChange={(swiper) => setActiveProcessStep(swiper.activeIndex)}
+              className="process-swiper"
+              style={{ width: '100%', padding: '3rem 0' }}
+            >
+              {processSteps.map((step, i) => (
+                <SwiperSlide key={i} style={{ 
+                  width: '320px', 
+                  height: '420px',
+                  background: 'var(--white)',
+                  borderRadius: '16px',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
+                  border: '8px solid white'
+                }}>
+                  {step.imageUrl ? (
+                    <img src={step.imageUrl} alt={step.title} style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#f8fafc' }} />
+                  ) : (
+                    <div style={{ fontSize: '2rem', fontWeight: 'bold', color: 'var(--dark)' }}>{step.title}</div>
+                  )}
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+
+          <div style={{ textAlign: 'center', marginTop: '1rem', maxWidth: '800px', margin: '0 auto' }}>
+            <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '1.125rem', lineHeight: 1.8 }}>
+              {processSteps[activeProcessStep]?.desc || contentProcess.description}
+            </p>
           </div>
         </div>
       </section>
