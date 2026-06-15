@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Target, Heart, Zap, Users, Smartphone, Globe, ShoppingBag, Shield, Terminal, Star, CheckCircle } from 'lucide-react';
+import { Target, Heart, Zap, Users, Smartphone, Globe, ShoppingBag, Shield, Terminal, Star, CheckCircle, Settings, Clock, MessageSquare, LifeBuoy } from 'lucide-react';
 import Counter from '../components/Counter';
 import SEO from '../components/SEO';
 
@@ -17,7 +17,11 @@ const IconMap = {
   Heart: <Heart size={24} />,
   Users: <Users size={24} />,
   Star: <Star size={24} />,
-  CheckCircle: <CheckCircle size={24} />
+  CheckCircle: <CheckCircle size={24} />,
+  Settings: <Settings size={24} />,
+  Clock: <Clock size={24} />,
+  MessageSquare: <MessageSquare size={24} />,
+  LifeBuoy: <LifeBuoy size={24} />
 };
 
 const About = () => {

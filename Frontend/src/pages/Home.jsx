@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Smartphone, Globe, ShoppingBag, ArrowRight, CheckCircle, Zap, Settings, Shield, Terminal, Target, Heart, Users, Star } from 'lucide-react';
+import { Smartphone, Globe, ShoppingBag, ArrowRight, CheckCircle, Zap, Settings, Shield, Terminal, Target, Heart, Users, Star, Clock, MessageSquare, LifeBuoy } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { usePageContent } from '../hooks/usePageContent';
 import SEO from '../components/SEO';
@@ -26,7 +26,11 @@ const IconMap = {
   Heart: <Heart size={24} />,
   Users: <Users size={24} />,
   Star: <Star size={24} />,
-  CheckCircle: <CheckCircle size={24} />
+  CheckCircle: <CheckCircle size={24} />,
+  Settings: <Settings size={24} />,
+  Clock: <Clock size={24} />,
+  MessageSquare: <MessageSquare size={24} />,
+  LifeBuoy: <LifeBuoy size={24} />
 };
 
 const Home = () => {

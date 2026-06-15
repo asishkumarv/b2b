@@ -13,7 +13,11 @@ const AVAILABLE_ICONS = [
   { value: 'Heart', label: '❤️ Heart' },
   { value: 'Users', label: '👥 Users' },
   { value: 'Star', label: '⭐ Star' },
-  { value: 'CheckCircle', label: '✅ Check Circle' }
+  { value: 'CheckCircle', label: '✅ Check Circle' },
+  { value: 'Settings', label: '⚙️ Settings (Custom)' },
+  { value: 'Clock', label: '⏱️ Clock (Timely)' },
+  { value: 'MessageSquare', label: '💬 Message (Communication)' },
+  { value: 'LifeBuoy', label: '🛟 LifeBuoy (Support)' }
 ];
 
 export const PageContentManager = () => {

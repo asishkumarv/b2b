@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Smartphone, Globe, ShoppingBag, CheckCircle, Zap, Shield, Terminal, Target, Heart, Users, Star } from 'lucide-react';
+import { Smartphone, Globe, ShoppingBag, CheckCircle, Zap, Shield, Terminal, Target, Heart, Users, Star, Settings, Clock, MessageSquare, LifeBuoy } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import appDevIllustration from '../assets/app_dev_illustration.png';
@@ -19,7 +19,11 @@ const IconMap = {
   Heart: <Heart size={32} />,
   Users: <Users size={32} />,
   Star: <Star size={32} />,
-  CheckCircle: <CheckCircle size={32} />
+  CheckCircle: <CheckCircle size={32} />,
+  Settings: <Settings size={32} />,
+  Clock: <Clock size={32} />,
+  MessageSquare: <MessageSquare size={32} />,
+  LifeBuoy: <LifeBuoy size={32} />
 };
 
 const Services = () => {
