@@ -14,10 +14,10 @@ const IconMap = {
 };
 
 const About = () => {
-  const content = usePageContent('about_us', 'A studio that ships real product.', '');
-  const contentValues = usePageContent('about_values', 'Our Values', '', []);
-  const contentStory = usePageContent('about_story', 'Our story', '', []);
-  const contentStats = usePageContent('about_stats', 'By the numbers', '', []);
+  const content = usePageContent('about_us', '', '');
+  const contentValues = usePageContent('about_values', '', '', []);
+  const contentStory = usePageContent('about_story', '', '', []);
+  const contentStats = usePageContent('about_stats', '', '', []);
 
   return (
     <motion.div

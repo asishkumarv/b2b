@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { usePageContent } from '../hooks/usePageContent';
 
 const Hero = () => {
-  const content = usePageContent('home_hero', 'Build the future of your business online.', 'We design and engineer mobile apps, websites, and e-commerce platforms that help modern brands grow.');
+  const content = usePageContent('home_hero', '', '');
 
   const containerVariants = {
     hidden: { opacity: 0 },

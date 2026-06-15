@@ -15,8 +15,8 @@ const IconMap = {
 };
 
 const Services = () => {
-  const content = usePageContent('services_intro', 'Our Services', '');
-  const contentList = usePageContent('services_list', 'Core Offerings', '', []);
+  const content = usePageContent('services_intro', '', '');
+  const contentList = usePageContent('services_list', '', '', []);
 
   return (
     <motion.div

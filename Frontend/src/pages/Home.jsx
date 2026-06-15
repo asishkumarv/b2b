@@ -25,13 +25,13 @@ const IconMap = {
 };
 
 const Home = () => {
-  const contentAbout = usePageContent('home_about', 'Who We Are', 'At B2B Web Solutions...', [], ecommerceDashboard);
-  const contentWhatWeDo = usePageContent('home_what_we_do', 'What we do', '', []);
-  const contentWhyChoose = usePageContent('home_why_choose', 'Why Partner With Us?', '', []);
-  const contentProcess = usePageContent('home_process', 'Our Proven Process', '', []);
-  const contentShowcase = usePageContent('home_showcase', 'Selected Work', '', []);
-  const contentTestimonial = usePageContent('home_testimonial', 'Client Success', '', { initials: '', name: '', role: '' });
-  const contentCta = usePageContent('home_cta', 'Have an idea?', '');
+  const contentAbout = usePageContent('home_about', '', '', [], ecommerceDashboard);
+  const contentWhatWeDo = usePageContent('home_what_we_do', '', '', []);
+  const contentWhyChoose = usePageContent('home_why_choose', '', '', []);
+  const contentProcess = usePageContent('home_process', '', '', []);
+  const contentShowcase = usePageContent('home_showcase', '', '', []);
+  const contentTestimonial = usePageContent('home_testimonial', '', '', { initials: '', name: '', role: '' });
+  const contentCta = usePageContent('home_cta', '', '');
 
   const [activeProcessStep, setActiveProcessStep] = useState(0);
 
