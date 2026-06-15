@@ -37,8 +37,18 @@ const seedData = [
   {
     pageKey: 'home_process',
     title: 'Our Proven Process',
-    description: 'We follow a rigorous, transparent methodology designed to minimize risk and maximize quality. From day one discovery to post-launch support, you are completely looped in.',
-    data: ['Discovery & Strategy', 'UI/UX Design', 'Agile Engineering', 'Launch & Scale']
+    description: 'From initial concept to global launch, we follow a rigorous and transparent 9-step methodology.',
+    data: [
+      { title: "1. Requirements", desc: "We conduct in-depth analysis and collaborative workshops to fully understand your business goals, target audience, and technical needs.", imageUrl: "/process/step1_requirements.png" },
+      { title: "2. Agreement", desc: "We formalize our partnership with clear timelines, deliverables, and a transparent contract ensuring all expectations are aligned.", imageUrl: "/process/step2_agreement.png" },
+      { title: "3. UI/UX Design", desc: "Our design team crafts intuitive, engaging, and visually stunning interfaces tailored specifically to your brand identity.", imageUrl: "/process/step3_uiux.png" },
+      { title: "4. Development", desc: "Our engineers write clean, scalable, and highly performant code, transforming the approved designs into a fully functional product.", imageUrl: "/process/step4_development.png" },
+      { title: "5. Testing", desc: "We rigorously test the application across multiple devices and environments to ensure security, stability, and zero bugs.", imageUrl: "/process/step5_testing.png" },
+      { title: "6. Client Approval", desc: "We present the final product for your review. We only move forward when you are 100% satisfied with the result.", imageUrl: "/process/step6_approval.png" },
+      { title: "7. Deployment", desc: "We carefully launch your application to live production environments using automated CI/CD pipelines to ensure zero downtime.", imageUrl: "/process/step7_deployment.png" },
+      { title: "8. User Experience", desc: "We monitor how real users interact with your platform and gather metrics to ensure a seamless and delightful journey.", imageUrl: "/process/step8_ux.png" },
+      { title: "9. Analogue Monitor", desc: "We provide 24/7 continuous system monitoring and analogue health checks to guarantee uptime and lightning-fast performance.", imageUrl: "/process/step9_analogue.png" }
+    ]
   },
   {
     pageKey: 'home_showcase',

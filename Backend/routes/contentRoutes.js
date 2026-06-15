@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
 
 // Update or Create content (Admin only)
 router.post("/", auth, async (req, res) => {
-  const { pageKey, title, description, imageUrl } = req.body;
+  const { pageKey, title, description, imageUrl, data } = req.body;
 
   try {
     let content = await PageContent.findOne({ where: { pageKey } });
@@ -25,13 +25,15 @@ router.post("/", auth, async (req, res) => {
       content.title = title;
       content.description = description;
       content.imageUrl = imageUrl;
+      if (data !== undefined) content.data = data;
       await content.save();
     } else {
       content = await PageContent.create({
         pageKey,
         title,
         description,
-        imageUrl
+        imageUrl,
+        data: data !== undefined ? data : {}
       });
     }
 
