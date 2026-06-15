@@ -6,6 +6,7 @@ const TawkBotFloat = () => {
 
   const handleClick = () => {
     if (window.Tawk_API && window.Tawk_API.maximize) {
+      window.Tawk_API.showWidget();
       window.Tawk_API.maximize();
     } else {
       // Create global Tawk API object if it doesn't exist
@@ -14,6 +15,11 @@ const TawkBotFloat = () => {
       // Tell Tawk to maximize as soon as it finishes loading
       window.Tawk_API.onLoad = function() {
         window.Tawk_API.maximize();
+      };
+
+      // When the user minimizes/closes the chat, hide the Tawk widget completely
+      window.Tawk_API.onChatMinimized = function() {
+        window.Tawk_API.hideWidget();
       };
 
       // Dynamically inject the script so nothing loads until clicked
