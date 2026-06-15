@@ -5,18 +5,29 @@ const TawkBotFloat = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   const handleClick = () => {
-    if (window.Tawk_API) {
-      // Remove the global hide class to allow the iframe to be visible
-      document.body.classList.remove('hide-tawk');
+    if (window.Tawk_API && window.Tawk_API.maximize) {
+      window.Tawk_API.maximize();
+    } else {
+      // Create global Tawk API object if it doesn't exist
+      window.Tawk_API = window.Tawk_API || {};
       
-      // Show the widget first
-      window.Tawk_API.showWidget();
-      
-      // Add a small delay to allow Tawk.to to re-calculate its DOM dimensions 
-      // before maximizing. This prevents the "full screen" fallback bug.
-      setTimeout(() => {
+      // Tell Tawk to maximize as soon as it finishes loading
+      window.Tawk_API.onLoad = function() {
         window.Tawk_API.maximize();
-      }, 150);
+      };
+
+      // Dynamically inject the script so nothing loads until clicked
+      var s1 = document.createElement("script");
+      var s0 = document.getElementsByTagName("script")[0];
+      s1.async = true;
+      s1.src = 'https://embed.tawk.to/6a2f9f8c17984b1d3de8c98e/1jr50efaa';
+      s1.charset = 'UTF-8';
+      s1.setAttribute('crossorigin', '*');
+      if (s0 && s0.parentNode) {
+        s0.parentNode.insertBefore(s1, s0);
+      } else {
+        document.head.appendChild(s1);
+      }
     }
   };
 
