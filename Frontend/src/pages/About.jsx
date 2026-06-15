@@ -14,22 +14,10 @@ const IconMap = {
 };
 
 const About = () => {
-  const content = usePageContent('about_us', 'A studio that ships real product.', 'B2B Web Solutions is a digital studio helping businesses launch apps, websites, and e-commerce experiences that feel inevitable.');
-  const contentValues = usePageContent('about_values', 'Our Values', 'What drives us forward.', [
-    { icon: 'Target', title: 'Outcome-driven', desc: 'We measure success by what your product achieves, not what we ship.' },
-    { icon: 'Heart', title: 'Craft first', desc: 'Every pixel, animation, and line of code is treated with care.' },
-    { icon: 'Zap', title: 'Move fast', desc: 'Tight feedback loops, weekly releases, no bureaucracy.' },
-    { icon: 'Users', title: 'True partners', desc: 'We embed with your team and stay long after launch.' }
-  ]);
-  const contentStory = usePageContent('about_story', 'Our story', 'The journey of B2B Web Solutions.', [
-    'We started B2B Web Solutions to fill the gap between freelance hustle and enterprise agency overhead. Our team partners with founders and product leaders to turn ambitious ideas into shipped software — on time, on budget, and beautifully built.',
-    'From a one-screen prototype to a fully featured cross-platform product, we work end-to-end across design, mobile, web, and commerce.'
-  ]);
-  const contentStats = usePageContent('about_stats', 'By the numbers', 'Our impact in numbers.', [
-    { end: 60, suffix: '+', label: 'Products shipped' },
-    { end: 12, suffix: '', label: 'Industries served' },
-    { end: 98, suffix: '%', label: 'Client retention' }
-  ]);
+  const content = usePageContent('about_us', 'A studio that ships real product.', '');
+  const contentValues = usePageContent('about_values', 'Our Values', '', []);
+  const contentStory = usePageContent('about_story', 'Our story', '', []);
+  const contentStats = usePageContent('about_stats', 'By the numbers', '', []);
 
   return (
     <motion.div

@@ -15,39 +15,8 @@ const IconMap = {
 };
 
 const Services = () => {
-  const content = usePageContent('services_intro', 'Our Services', 'Comprehensive digital solutions tailored for modern businesses aiming for growth and scale.');
-  const contentList = usePageContent('services_list', 'Core Offerings', '', [
-    {
-      id: 'app',
-      icon: 'Smartphone',
-      title: 'App Development',
-      desc: 'We build native and cross-platform mobile applications for iOS and Android that deliver exceptional user experiences.',
-      features: ['React Native & Flutter', 'Native iOS (Swift) & Android (Kotlin)', 'App Store Optimization', 'Mobile UI/UX Design'],
-      blobClass: 'blob-1',
-      reverse: false,
-      imageUrl: appDevIllustration
-    },
-    {
-      id: 'web',
-      icon: 'Globe',
-      title: 'Website Development',
-      desc: 'High-performance, accessible, and responsive web applications built with modern frameworks and best practices.',
-      features: ['React, Vue & Next.js', 'Custom CMS Integration', 'SEO Optimization', 'Web Animations & WebGL'],
-      blobClass: 'blob-2',
-      reverse: true,
-      imageUrl: webDevIllustration
-    },
-    {
-      id: 'ecommerce',
-      icon: 'ShoppingBag',
-      title: 'E-commerce Development',
-      desc: 'Scalable online stores designed to convert visitors into customers, with robust backend management and analytics.',
-      features: ['Shopify Plus & Custom Stores', 'Payment Gateway Integration', 'Inventory Management', 'Conversion Rate Optimization'],
-      blobClass: 'blob-1',
-      reverse: false,
-      imageUrl: ecommerceDevIllustration
-    }
-  ]);
+  const content = usePageContent('services_intro', 'Our Services', '');
+  const contentList = usePageContent('services_list', 'Core Offerings', '', []);
 
   return (
     <motion.div

@@ -25,24 +25,13 @@ const IconMap = {
 };
 
 const Home = () => {
-  const contentAbout = usePageContent('home_about', 'Who We Are', 'At B2B Web Solutions...', ['Elite Engineering', 'Scalable Architecture', 'Premium Design'], ecommerceDashboard);
-  const contentWhatWeDo = usePageContent('home_what_we_do', 'What we do', 'From idea to launch...', [
-    { icon: 'Smartphone', title: 'App Development', description: 'Native apps' },
-    { icon: 'Globe', title: 'Website Development', description: 'Fast sites' },
-    { icon: 'ShoppingBag', title: 'E-commerce Development', description: 'Scalable stores' }
-  ]);
-  const contentWhyChoose = usePageContent('home_why_choose', 'Why Partner With Us?', 'We engineer value.', [
-    { icon: 'Zap', title: 'High Performance', desc: 'Fast load times.' },
-    { icon: 'Shield', title: 'Bank-grade Security', desc: 'Secure data.' },
-    { icon: 'Terminal', title: 'Clean Architecture', desc: 'Scalable code.' }
-  ]);
-  const contentProcess = usePageContent('home_process', 'Our Proven Process', 'Rigorous methodology.', ['Discovery', 'Design', 'Engineering', 'Launch']);
-  const contentShowcase = usePageContent('home_showcase', 'Selected Work', 'Premium products.', [
-    { imageUrl: ecommerceDashboard, title: 'Modern SaaS Dashboard', desc: 'Analytics Platform' },
-    { imageUrl: mobileAppUi, title: 'Fintech Mobile App', desc: 'Financial tracking' }
-  ]);
-  const contentTestimonial = usePageContent('home_testimonial', 'Client Success', '"Transformative platform."', { initials: 'SJ', name: 'Sarah Jenkins', role: 'CTO' });
-  const contentCta = usePageContent('home_cta', 'Have an idea? Let\'s build it.', 'Tell us about your project.');
+  const contentAbout = usePageContent('home_about', 'Who We Are', 'At B2B Web Solutions...', [], ecommerceDashboard);
+  const contentWhatWeDo = usePageContent('home_what_we_do', 'What we do', '', []);
+  const contentWhyChoose = usePageContent('home_why_choose', 'Why Partner With Us?', '', []);
+  const contentProcess = usePageContent('home_process', 'Our Proven Process', '', []);
+  const contentShowcase = usePageContent('home_showcase', 'Selected Work', '', []);
+  const contentTestimonial = usePageContent('home_testimonial', 'Client Success', '', { initials: '', name: '', role: '' });
+  const contentCta = usePageContent('home_cta', 'Have an idea?', '');
 
   const [activeProcessStep, setActiveProcessStep] = useState(0);
 
