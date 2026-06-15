@@ -17,20 +17,15 @@
     <!--Start of Tawk.to Script-->
     <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    Tawk_API.customStyle = {
-        visibility: {
-            desktop: {
-                position: 'br',
-                xOffset: 32,
-                yOffset: 100
-            },
-            mobile: {
-                position: 'br',
-                xOffset: 32,
-                yOffset: 100
-            }
-        }
+    
+    // Hide default widget, we will trigger it from our custom React component
+    Tawk_API.onLoad = function() {
+        Tawk_API.hideWidget();
     };
+    Tawk_API.onChatMinimized = function() {
+        Tawk_API.hideWidget();
+    };
+
     (function(){
     var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
     s1.async=true;

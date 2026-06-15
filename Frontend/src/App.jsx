@@ -14,6 +14,7 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import QuotePopup from "./components/QuotePopup";
 import WhatsAppFloat from "./components/WhatsAppFloat";
+import TawkBotFloat from "./components/TawkBotFloat";
 import SocialSidebar from "./components/SocialSidebar";
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <QuotePopup />
       <WhatsAppFloat />
+      <TawkBotFloat />
       <SocialSidebar />
       <Navbar />
 

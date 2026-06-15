@@ -39,7 +39,7 @@ export const usePageContent = (pageKey, defaultTitle, defaultDescription, defaul
     };
 
     fetchContent();
-  }, [pageKey, defaultTitle, defaultDescription, defaultData, defaultImageUrl]);
+  }, [pageKey]); // Removing defaultData/arrays from deps to prevent infinite loops
 
   return content;
 };
