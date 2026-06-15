@@ -6,6 +6,9 @@ const TawkBotFloat = () => {
 
   const handleClick = () => {
     if (window.Tawk_API) {
+      // Remove the global hide class to allow the iframe to be visible
+      document.body.classList.remove('hide-tawk');
+      
       // Show the widget first
       window.Tawk_API.showWidget();
       

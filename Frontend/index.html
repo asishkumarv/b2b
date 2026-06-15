@@ -9,8 +9,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      /* Force hide Tawk.to until triggered */
+      body.hide-tawk iframe[src*="tawk.to"] {
+        opacity: 0 !important;
+        pointer-events: none !important;
+        transform: scale(0) !important;
+        visibility: hidden !important;
+      }
+    </style>
   </head>
-  <body>
+  <body class="hide-tawk">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
     
@@ -24,6 +33,7 @@
     };
     Tawk_API.onChatMinimized = function() {
         Tawk_API.hideWidget();
+        document.body.classList.add('hide-tawk');
     };
 
     (function(){
