@@ -31,6 +31,17 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "Invalid Credentials" });
     }
 
+    // FIX: If the user was the original admin but got downgraded by Sequelize's default 'staff' value,
+    // we auto-promote them back to 'admin' if there are currently no admins in the database.
+    if (user.role !== 'admin' || user.status !== 'approved') {
+      const adminCount = await User.count({ where: { role: 'admin' } });
+      if (adminCount === 0) {
+        user.role = 'admin';
+        user.status = 'approved';
+        await user.save();
+      }
+    }
+
     if (user.role === 'staff' && user.status !== 'approved') {
       return res.status(403).json({ message: "Account is pending approval or deactivated" });
     }
