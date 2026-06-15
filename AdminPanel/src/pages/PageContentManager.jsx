@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Loader2, CheckCircle } from 'lucide-react';
 
 export const PageContentManager = () => {
   const [content, setContent] = useState({ pageKey: 'home_hero', title: '', description: '', imageUrl: '', data: null });
   const [allContent, setAllContent] = useState({});
-  const [message, setMessage] = useState('');
   const [uploading, setUploading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   useEffect(() => {
     const fetchContent = async () => {
@@ -90,16 +92,19 @@ export const PageContentManager = () => {
 
   const handleSave = async (e) => {
     e.preventDefault();
+    setIsSaving(true);
     try {
       const token = localStorage.getItem('adminToken');
       await axios.post('https://api.b2bwebsolutions.com/api/content', content, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setAllContent(prev => ({ ...prev, [content.pageKey]: content }));
-      setMessage('Saved successfully!');
-      setTimeout(() => setMessage(''), 3000);
+      setIsSaving(false);
+      setShowSuccessPopup(true);
+      setTimeout(() => setShowSuccessPopup(false), 2500);
     } catch (err) {
-      setMessage('Error saving');
+      setIsSaving(false);
+      alert('Error saving content. Please try again.');
     }
   };
 
@@ -299,8 +304,39 @@ export const PageContentManager = () => {
   return (
     <div>
       <h2 className="h2-title" style={{ marginBottom: '2rem' }}>Manage Page Content</h2>
+      
+      {/* Loading & Success Overlay */}
+      {(isSaving || showSuccessPopup) && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+          backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 9999,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          backdropFilter: 'blur(4px)'
+        }}>
+          <div style={{
+            background: 'white', padding: '2.5rem 3rem', borderRadius: '16px',
+            display: 'flex', flexDirection: 'column', alignItems: 'center',
+            boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
+            transform: 'translateY(-20px)'
+          }}>
+            {isSaving ? (
+              <>
+                <Loader2 size={48} color="var(--primary)" style={{ animation: 'spin 1s linear infinite', marginBottom: '1rem' }} />
+                <h3 style={{ margin: 0, color: 'var(--dark)' }}>Saving Changes...</h3>
+                <style>{`@keyframes spin { 100% { transform: rotate(360deg); } }`}</style>
+              </>
+            ) : (
+              <>
+                <CheckCircle size={56} color="#10b981" style={{ marginBottom: '1rem' }} />
+                <h3 style={{ margin: 0, color: '#10b981' }}>Saved Successfully!</h3>
+                <p style={{ margin: '0.5rem 0 0', color: 'var(--gray-500)', fontSize: '0.9rem' }}>The page has been updated.</p>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
       <div className="service-card" style={{ maxWidth: '700px' }}>
-        {message && <div style={{ background: '#dcfce7', color: '#166534', padding: '1rem', borderRadius: '8px', marginBottom: '1.5rem', fontWeight: 500 }}>{message}</div>}
         <form onSubmit={handleSave} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           <div>
             <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--dark)' }}>Section Key</label>

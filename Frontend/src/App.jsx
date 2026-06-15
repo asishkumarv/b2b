@@ -16,6 +16,7 @@ import QuotePopup from "./components/QuotePopup";
 import WhatsAppFloat from "./components/WhatsAppFloat";
 import TawkBotFloat from "./components/TawkBotFloat";
 import SocialSidebar from "./components/SocialSidebar";
+import AnimatedLoader from "./components/AnimatedLoader";
 
 function App() {
   const location = useLocation();
@@ -43,6 +44,7 @@ function App() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+      <AnimatedLoader />
       <QuotePopup />
       <WhatsAppFloat />
       <TawkBotFloat />
