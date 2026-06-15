@@ -2,6 +2,20 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Loader2, CheckCircle } from 'lucide-react';
 
+const AVAILABLE_ICONS = [
+  { value: 'Smartphone', label: '📱 Smartphone' },
+  { value: 'Globe', label: '🌍 Globe' },
+  { value: 'ShoppingBag', label: '🛍️ Shopping Bag' },
+  { value: 'Zap', label: '⚡ Lightning (Zap)' },
+  { value: 'Shield', label: '🛡️ Shield' },
+  { value: 'Terminal', label: '💻 Code (Terminal)' },
+  { value: 'Target', label: '🎯 Target' },
+  { value: 'Heart', label: '❤️ Heart' },
+  { value: 'Users', label: '👥 Users' },
+  { value: 'Star', label: '⭐ Star' },
+  { value: 'CheckCircle', label: '✅ Check Circle' }
+];
+
 export const PageContentManager = () => {
   const [content, setContent] = useState({ pageKey: 'home_hero', title: '', description: '', imageUrl: '', data: null });
   const [allContent, setAllContent] = useState({});
@@ -143,9 +157,14 @@ export const PageContentManager = () => {
           {(data || []).map((item, i) => (
             <div key={i} style={{ background: 'var(--white)', padding: '1rem', borderRadius: '8px', marginBottom: '1rem' }}>
               <div style={{ display: 'flex', gap: '1rem', marginBottom: '0.5rem' }}>
-                <div style={{ flex: 1 }}><label style={{fontSize:'0.8rem'}}>Icon (e.g. Zap, Shield)</label><input type="text" value={item.icon || ''} onChange={e => {
+                <div style={{ flex: 1 }}><label style={{fontSize:'0.8rem'}}>Icon</label>
+                <select value={item.icon || ''} onChange={e => {
                   const newData = [...data]; newData[i].icon = e.target.value; setContent({...content, data: newData});
-                }} style={inputStyle} /></div>
+                }} style={{ ...inputStyle, padding: '0.6rem' }}>
+                  <option value="">Select an icon...</option>
+                  {AVAILABLE_ICONS.map(icon => <option key={icon.value} value={icon.value}>{icon.label}</option>)}
+                </select>
+                </div>
                 <div style={{ flex: 2 }}><label style={{fontSize:'0.8rem'}}>Title</label><input type="text" value={item.title || ''} onChange={e => {
                   const newData = [...data]; newData[i].title = e.target.value; setContent({...content, data: newData});
                 }} style={inputStyle} /></div>
@@ -263,9 +282,14 @@ export const PageContentManager = () => {
                 <input type="file" onChange={(e) => handleImageUpload(e, 'arrayItem', i)} />
               </div>
               <div style={{ display: 'flex', gap: '1rem', marginBottom: '0.5rem' }}>
-                <div style={{ flex: 1 }}><label style={{fontSize:'0.8rem'}}>Icon</label><input type="text" value={item.icon || ''} onChange={e => {
+                <div style={{ flex: 1 }}><label style={{fontSize:'0.8rem'}}>Icon</label>
+                <select value={item.icon || ''} onChange={e => {
                   const newData = [...data]; newData[i].icon = e.target.value; setContent({...content, data: newData});
-                }} style={inputStyle} /></div>
+                }} style={{ ...inputStyle, padding: '0.6rem' }}>
+                  <option value="">Select an icon...</option>
+                  {AVAILABLE_ICONS.map(icon => <option key={icon.value} value={icon.value}>{icon.label}</option>)}
+                </select>
+                </div>
                 <div style={{ flex: 2 }}><label style={{fontSize:'0.8rem'}}>Title</label><input type="text" value={item.title || ''} onChange={e => {
                   const newData = [...data]; newData[i].title = e.target.value; setContent({...content, data: newData});
                 }} style={inputStyle} /></div>

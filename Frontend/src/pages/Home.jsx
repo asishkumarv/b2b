@@ -192,56 +192,59 @@ const Home = () => {
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </div>
             
-            <Swiper
-              effect={'coverflow'}
-              grabCursor={true}
-              centeredSlides={true}
-              slidesPerView={'auto'}
-              loop={true}
-              coverflowEffect={{
-                rotate: 0,
-                stretch: -120, // Huge negative stretch to aggressively push cards apart
-                depth: 200, // Keep inactive cards pushed back
-                modifier: 1,
-                slideShadows: false,
-              }}
-              navigation={{
-                nextEl: '.custom-swiper-next',
-                prevEl: '.custom-swiper-prev',
-              }}
-              autoplay={{
-                delay: 3000,
-                disableOnInteraction: false,
-              }}
-              modules={[EffectCoverflow, Navigation, Autoplay]}
-              onSlideChange={(swiper) => {
-                // When looping, realIndex provides the correct index of the original array
-                setActiveProcessStep(swiper.realIndex);
-              }}
-              className="process-swiper"
-              style={{ width: '100%' }}
-            >
-              {processSteps.map((step, i) => (
-                <SwiperSlide key={i} style={{ 
-                  width: '220px', // Reduced width to fit screen
-                  height: '300px', // Reduced height to fit screen
-                  background: 'var(--white)',
-                  borderRadius: '16px',
-                  overflow: 'hidden',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
-                  border: '6px solid white'
-                }}>
-                  {step.imageUrl ? (
-                    <img src={step.imageUrl} alt={step.title} style={{ width: '100%', height: '100%', objectFit: 'cover', background: '#fff' }} />
-                  ) : (
-                    <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--dark)', textAlign: 'center', padding: '1rem' }}>{step.title}</div>
-                  )}
-                </SwiperSlide>
-              ))}
-            </Swiper>
+            {processSteps.length > 0 && (
+              <Swiper
+                key={`swiper-${processSteps.length}`}
+                effect={'coverflow'}
+                grabCursor={true}
+                centeredSlides={true}
+                slidesPerView={'auto'}
+                loop={true}
+                coverflowEffect={{
+                  rotate: 0,
+                  stretch: -120, // Huge negative stretch to aggressively push cards apart
+                  depth: 200, // Keep inactive cards pushed back
+                  modifier: 1,
+                  slideShadows: false,
+                }}
+                navigation={{
+                  nextEl: '.custom-swiper-next',
+                  prevEl: '.custom-swiper-prev',
+                }}
+                autoplay={{
+                  delay: 3000,
+                  disableOnInteraction: false,
+                }}
+                modules={[EffectCoverflow, Navigation, Autoplay]}
+                onSlideChange={(swiper) => {
+                  // When looping, realIndex provides the correct index of the original array
+                  setActiveProcessStep(swiper.realIndex);
+                }}
+                className="process-swiper"
+                style={{ width: '100%' }}
+              >
+                {processSteps.map((step, i) => (
+                  <SwiperSlide key={i} style={{ 
+                    width: '220px', // Reduced width to fit screen
+                    height: '300px', // Reduced height to fit screen
+                    background: 'var(--white)',
+                    borderRadius: '16px',
+                    overflow: 'hidden',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
+                    border: '6px solid white'
+                  }}>
+                    {step.imageUrl ? (
+                      <img src={step.imageUrl} alt={step.title} style={{ width: '100%', height: '100%', objectFit: 'cover', background: '#fff' }} />
+                    ) : (
+                      <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--dark)', textAlign: 'center', padding: '1rem' }}>{step.title}</div>
+                    )}
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            )}
           </div>
 
           <div style={{ textAlign: 'center', marginTop: '1rem', maxWidth: '1000px', margin: '0 auto' }}>
