@@ -27,6 +27,15 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: true,
       defaultValue: "Contact Form" // 'Popup Form' or 'Contact Form'
+    },
+    assignedTo: {
+      type: DataTypes.UUID,
+      allowNull: true,
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "Pending", // "Pending", "Contacted", "Requirements Gathering", "In Progress", "Deal Done", "Rejected"
     }
   });
 

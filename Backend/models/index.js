@@ -17,6 +17,9 @@ const PageContent = require("./PageContent")(sequelize);
 const Blog = require("./Blog")(sequelize);
 const Enquiry = require("./Enquiry")(sequelize);
 
+User.hasMany(Enquiry, { foreignKey: 'assignedTo' });
+Enquiry.belongsTo(User, { as: 'staff', foreignKey: 'assignedTo' });
+
 module.exports = {
   sequelize,
   User,

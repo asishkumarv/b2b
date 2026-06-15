@@ -12,9 +12,27 @@ module.exports = (sequelize) => {
       allowNull: false,
       unique: true,
     },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    phone: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    role: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "staff", // "admin" or "staff"
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "pending", // "pending", "approved", "deactivated"
     },
   });
 
