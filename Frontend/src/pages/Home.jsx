@@ -47,9 +47,26 @@ const Home = () => {
   const [activeProcessStep, setActiveProcessStep] = useState(0);
 
   // Safely map data to support both old array-of-strings and new array-of-objects formats
-  const processSteps = Array.isArray(contentProcess.data) 
-    ? contentProcess.data.map(item => typeof item === 'string' ? { title: item, desc: '', imageUrl: '' } : item)
-    : [];
+  let processSteps = [];
+  if (Array.isArray(contentProcess.data)) {
+    // If the API returns the old 4 string items (because the remote backend hasn't been deployed with our fix yet),
+    // inject our new 9 process steps manually so the UI connects correctly.
+    if (contentProcess.data.length === 4 && typeof contentProcess.data[0] === 'string') {
+      processSteps = [
+        { title: "1. Requirements", desc: "We conduct in-depth analysis and collaborative workshops to fully understand your business goals, target audience, and technical needs.", imageUrl: "/process/step1_requirements.png" },
+        { title: "2. Agreement", desc: "We formalize our partnership with clear timelines, deliverables, and a transparent contract ensuring all expectations are aligned.", imageUrl: "/process/step2_agreement.png" },
+        { title: "3. UI/UX Design", desc: "Our design team crafts intuitive, engaging, and visually stunning interfaces tailored specifically to your brand identity.", imageUrl: "/process/step3_uiux.png" },
+        { title: "4. Development", desc: "Our engineers write clean, scalable, and highly performant code, transforming the approved designs into a fully functional product.", imageUrl: "/process/step4_development.png" },
+        { title: "5. Testing", desc: "We rigorously test the application across multiple devices and environments to ensure security, stability, and zero bugs.", imageUrl: "/process/step5_testing.png" },
+        { title: "6. Client Approval", desc: "We present the final product for your review. We only move forward when you are 100% satisfied with the result.", imageUrl: "/process/step6_approval.png" },
+        { title: "7. Deployment", desc: "We carefully launch your application to live production environments using automated CI/CD pipelines to ensure zero downtime.", imageUrl: "/process/step7_deployment.png" },
+        { title: "8. User Experience", desc: "We monitor how real users interact with your platform and gather metrics to ensure a seamless and delightful journey.", imageUrl: "/process/step8_ux.png" },
+        { title: "9. Analogue Monitor", desc: "We provide 24/7 continuous system monitoring and analogue health checks to guarantee uptime and lightning-fast performance.", imageUrl: "/process/step9_analogue.png" }
+      ];
+    } else {
+      processSteps = contentProcess.data.map(item => typeof item === 'string' ? { title: item, desc: '', imageUrl: '' } : item);
+    }
+  }
 
   return (
     <motion.div
@@ -133,83 +150,113 @@ const Home = () => {
       </section>
 
       {/* Process Section - 3D Coverflow */}
-      <section className="section-padding" style={{ background: 'var(--dark)', color: 'white', position: 'relative', overflow: 'hidden' }}>
+      <section className="section-padding" style={{ background: 'var(--dark)', color: 'white', position: 'relative', overflow: 'hidden', padding: '4rem 0' }}>
         <style>{`
-          .process-swiper .swiper-button-next,
-          .process-swiper .swiper-button-prev {
-            background: white;
-            color: var(--dark) !important;
-            width: 48px !important;
-            height: 48px !important;
+          .process-swiper {
+            padding: 2rem 0 !important;
+          }
+          .process-swiper .swiper-slide {
+            transition: transform 0.3s ease;
+          }
+          .custom-swiper-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(4px);
+            color: white;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
           }
-          .process-swiper .swiper-button-next::after,
-          .process-swiper .swiper-button-prev::after {
-            font-size: 20px !important;
-            font-weight: 800;
+          .custom-swiper-nav:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-50%) scale(1.1);
           }
+          .custom-swiper-prev { left: 0; }
+          .custom-swiper-next { right: 0; }
         `}</style>
         
         <div className="container" style={{ maxWidth: '1200px' }}>
-          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-            <h2 className="h2-title" style={{ color: 'white', marginBottom: '1rem', fontSize: '3rem', fontWeight: 300 }}>{contentProcess.title}</h2>
+          <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
+            <h2 className="h2-title" style={{ color: 'var(--gray-300)', marginBottom: '0.5rem', fontSize: '3rem', fontWeight: 300, fontFamily: 'sans-serif' }}>Our Process</h2>
             {processSteps.length > 0 && (
-              <h3 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--gray-300)' }}>
-                {processSteps[activeProcessStep]?.title || `Step ${activeProcessStep + 1}`}
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'white' }}>
+                Step {activeProcessStep + 1}: {processSteps[activeProcessStep]?.title.replace(/^\d+\.\s*/, '') || ''}
               </h3>
             )}
           </div>
           
-          <div style={{ padding: '2rem 0' }}>
+          <div style={{ position: 'relative', padding: '0 80px' }}>
+            <div className="custom-swiper-nav custom-swiper-prev">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </div>
+            <div className="custom-swiper-nav custom-swiper-next">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
+            
             <Swiper
               effect={'coverflow'}
               grabCursor={true}
               centeredSlides={true}
               slidesPerView={'auto'}
-              initialSlide={Math.floor(processSteps.length / 2) || 0}
+              loop={true}
               coverflowEffect={{
                 rotate: 0,
-                stretch: 0,
-                depth: 150,
-                modifier: 2.5,
-                slideShadows: true,
+                stretch: -120, // Huge negative stretch to aggressively push cards apart
+                depth: 200, // Keep inactive cards pushed back
+                modifier: 1,
+                slideShadows: false,
               }}
-              navigation={true}
+              navigation={{
+                nextEl: '.custom-swiper-next',
+                prevEl: '.custom-swiper-prev',
+              }}
               autoplay={{
                 delay: 3000,
                 disableOnInteraction: false,
               }}
               modules={[EffectCoverflow, Navigation, Autoplay]}
-              onSlideChange={(swiper) => setActiveProcessStep(swiper.activeIndex)}
+              onSlideChange={(swiper) => {
+                // When looping, realIndex provides the correct index of the original array
+                setActiveProcessStep(swiper.realIndex);
+              }}
               className="process-swiper"
-              style={{ width: '100%', padding: '3rem 0' }}
+              style={{ width: '100%' }}
             >
               {processSteps.map((step, i) => (
                 <SwiperSlide key={i} style={{ 
-                  width: '320px', 
-                  height: '420px',
+                  width: '220px', // Reduced width to fit screen
+                  height: '300px', // Reduced height to fit screen
                   background: 'var(--white)',
                   borderRadius: '16px',
                   overflow: 'hidden',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
-                  border: '8px solid white'
+                  boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
+                  border: '6px solid white'
                 }}>
                   {step.imageUrl ? (
-                    <img src={step.imageUrl} alt={step.title} style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#f8fafc' }} />
+                    <img src={step.imageUrl} alt={step.title} style={{ width: '100%', height: '100%', objectFit: 'cover', background: '#fff' }} />
                   ) : (
-                    <div style={{ fontSize: '2rem', fontWeight: 'bold', color: 'var(--dark)' }}>{step.title}</div>
+                    <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--dark)', textAlign: 'center', padding: '1rem' }}>{step.title}</div>
                   )}
                 </SwiperSlide>
               ))}
             </Swiper>
           </div>
 
-          <div style={{ textAlign: 'center', marginTop: '1rem', maxWidth: '800px', margin: '0 auto' }}>
-            <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '1.125rem', lineHeight: 1.8 }}>
+          <div style={{ textAlign: 'center', marginTop: '1rem', maxWidth: '1000px', margin: '0 auto' }}>
+            <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '1rem', lineHeight: 1.6 }}>
               {processSteps[activeProcessStep]?.desc || contentProcess.description}
             </p>
           </div>
